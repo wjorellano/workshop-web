@@ -31,4 +31,5 @@ export class ApiService {
   getCustomerById(customerNumber: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/customers/${customerNumber}`);
   }
+
 }

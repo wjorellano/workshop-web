@@ -1,56 +1,36 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-<style>
-</style>
-
 <main class="main">
 <div class="p-6 max-full mx-auto bg-white ">
-  <h1 class="text-center text-xl font-bold mb-4">FrontAngular</h1>
+  <h1 class="ml-auto text-xl font-bold mb-9">Customers</h1>
 
-  <!-- Selección de cliente -->
-  <div class="mb-4">
-    <label for="customer" class="block text-gray-700">Customer</label>
-<!--error aquí-->
-<select id="customer" (change)="onCustomerChange($event)" class="w-full border-gray-300 rounded-md shadow-sm">
-  <option value="">--Seleccione--</option>
-  <option *ngFor="let customer of customers" [value]="customer?.customerNumber">{{ customer?.customerName }}</option>
-  <div *ngIf="!customers?.length">No hay clientes disponibles</div>
-</select>
-
-
+  <div class="mt-5 mb-4">
+    <label for="customer" class="block text-gray-700">Cliente</label>
+    <select id="customer" (change)="onCustomerChange($event)" class="w-full border-gray-300 rounded-md shadow-sm p-2">
+      <option value="">--Seleccione--</option>
+      <option *ngFor="let customer of customers" [value]="customer?.customerNumber">{{ customer?.customerName }}</option>
+      <div *ngIf="!customers?.length">No hay clientes disponibles</div>
+    </select>
   </div>
 
-  <!-- Información del cliente -->
   <div class="grid grid-cols-2 gap-4 mb-4" *ngIf="selectedCustomer">
     <div>
-      <label class="block text-gray-700">Customer Number</label>
-      <input class="w-full border-gray-300 rounded-md shadow-sm" [value]="selectedCustomer.customerNumber" disabled />
+      <label class="block text-gray-700"> Número de cliente</label>
+      <input class="w-full border-gray-300 rounded-md shadow-sm p-2" [value]="selectedCustomer.customerNumber" disabled />
     </div>
     <div>
-      <label class="block text-gray-700">Name Customer</label>
-      <input class="w-full border-gray-300 rounded-md shadow-sm" [value]="selectedCustomer.customerName" disabled />
+      <label class="block text-gray-700">Nombre del cliente</label>
+      <input class="w-full border-gray-300 rounded-md shadow-sm p-2" [value]="selectedCustomer.customerName" disabled />
     </div>
     <div>
       <label class="block text-gray-700">Contact First Name</label>
-      <input class="w-full border-gray-300 rounded-md shadow-sm" [value]="selectedCustomer.contactFirstName" disabled />
+      <input class="w-full border-gray-300 rounded-md shadow-sm p-2" [value]="selectedCustomer.contactFirstName" disabled />
     </div>
     <div>
-      <label class="block text-gray-700">City</label>
-      <input class="w-full border-gray-300 rounded-md shadow-sm" [value]="selectedCustomer.city" disabled />
+      <label class="block text-gray-700">Ciudad</label>
+      <input class="w-full border-gray-300 rounded-md shadow-sm p-2" [value]="selectedCustomer.city" disabled />
     </div>
   </div>
 
-  <!-- Tabla de órdenes -->
-  <div class="mb-4"
-   >
-  <!-- *ngIf="orders.length > 0" -->
+  <div class="mb-4">
     <h2 class="text-center text-lg font-semibold mb-2">Orders</h2>
     <table class="min-w-full table-auto border-collapse border border-gray-400">
       <thead>
@@ -63,39 +43,20 @@
       </thead>
       <tbody>
         <tr *ngFor="let order of orders">
-
           <td class="border border-gray-300 px-4 py-2 text-center">{{ order.orderNumber }}</td>
-          <td class="border border-gray-300 px-4 py-2 text-center">{{ order.orderDate }}</td>
-          <td class="border border-gray-300 px-4 py-2 text-right">${{ order.total }}</td>
-          <td class="border border-gray-300 px-4 py-2 text-center">{{ order.status }}</td>
+          <td class="border border-gray-300 px-4 py-2 text-center">{{ order.orderDate | date: 'dd/MM/yyyy'  }}</td>
+          <td class="border border-gray-300 px-4 py-2 text-center">${{ order.total }}</td>
+          <td class="border border-gray-300 px-4 py-2 text-center">
+            <p class=" w-20 bg-green-200 rounded-full m-auto text-green-800">{{order.status}}</p>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Total de órdenes -->
-  <div class="text-right text-2xl font-bold mb-4" *ngIf="totalOrders > 0">
+  <div class="text-right text-2xl font-bold mb-4">
     Total Orders: <span>${{ totalOrders }}</span>
   </div>
-
-  <!-- Botón de volver -->
-  <div class="text-center">
-    <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-      Back
-    </button>
-  </div>
 </div>
-
-
 </main>
-
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-
 <router-outlet />
