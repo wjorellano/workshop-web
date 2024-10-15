@@ -6,16 +6,16 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,  CommonModule],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [ApiService] // Añade ApiService aquí
+  providers: [ApiService]
 })
 export class AppComponent implements OnInit {
   customers: any[] = [];
   orders: any[] = [];
   totalOrders: number = 0;
-  selectedCustomer: any | null = null; // Inicializa como null para evitar posibles errores
+  selectedCustomer: any | null = null;
 
   constructor(private apiService: ApiService) {}
 
@@ -29,13 +29,17 @@ export class AppComponent implements OnInit {
     });
   }
 
-  onCustomerChange(customerNumber: string) {
+  onCustomerChange(event: Event) {
+    const target = event.target as HTMLSelectElement; // Convierte el target en HTMLSelectElement
+    const customerNumber = target.value;
+
     if (customerNumber) {
       this.apiService.getCustomerById(customerNumber).subscribe((data: any) => {
-        this.selectedCustomer = data[0] || null; // Asegurarse de que sea null si no hay datos
+        this.selectedCustomer = data[0] || null;
       });
 
       this.loadOrders(customerNumber);
+      console.log("Customer number: ", customerNumber);
     } else {
       this.selectedCustomer = null;
       this.orders = [];
@@ -43,15 +47,15 @@ export class AppComponent implements OnInit {
     }
   }
 
-
   loadOrders(customerNumber: string) {
     this.apiService.getOrdersByCustomer(customerNumber).subscribe((data: any) => {
-      this.orders = data;
+      console.log("Orders: ", data[0].orders);
+      this.orders = data[0].orders;
       this.calculateTotal();
     });
   }
 
   calculateTotal() {
-    this.totalOrders = this.orders.reduce((total, order) => total + (order?.total || 0), 0); // Manejo de nulls
+    this.totalOrders = this.orders.reduce((total, order) => total + (order?.total || 0), 0);
   }
 }
